@@ -3,6 +3,9 @@ package net.decosa.facturas.fe;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +15,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import net.decosa.sii.SiiConfig;
 import net.decosa.sii.ed.Contraparte;
-import net.decosa.sii.ed.FacturaEmitida;
 import net.decosa.sii.ed.DesgloseIVAFE;
+import net.decosa.sii.ed.FacturaEmitida;
 import net.decosa.sii.ed.IDFactura;
 import net.decosa.sii.ed.PeriodoImpositivo;
+import net.decosa.sii.facturas.RespuestaAlta;
 import net.decosa.sii.facturas.fe.AltaFE;
 import net.decosa.sii.util.DateUtils;
 
@@ -24,6 +28,8 @@ import net.decosa.sii.util.DateUtils;
 @ContextConfiguration(classes = SiiConfig.class)
 public class AltaFETest {
 
+	private final static Log log = LogFactory.getLog(AltaFETest.class);
+	
 	@Autowired
 	private AltaFE altaFE;
 	
@@ -63,9 +69,18 @@ public class AltaFETest {
 	public void altaFETest() {
 		try {
 			altaFE.setFacturas(facturasEmitidas);
+			
+			// Mostrar XML
 			System.out.println(altaFE.getXML());
 			
+			// Enviar por WS
+			boolean simularEnvio = true;
+			altaFE.send(simularEnvio);
+			
+			Assert.assertTrue(true);
+			
 		} catch (Exception e) {
+			Assert.assertTrue(false);
 			e.printStackTrace();
 		}
 	}

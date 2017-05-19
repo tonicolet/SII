@@ -20,7 +20,7 @@ public class Contraparte {
 	}
 	
 	
-	public PersonaFisicaJuridicaType toPersonaFisicaJuridicaType() {
+	public PersonaFisicaJuridicaType getPersonaFisicaJuridicaType() {
 		PersonaFisicaJuridicaType contraparte = new PersonaFisicaJuridicaType();
 		contraparte.setNIF(nif);
 		contraparte.setNombreRazon(StringUtils.limit(StringUtils.removeSpecialChars(nombreRazon), SiiConfig.MAX_LONG_NOMBRE_RAZON));

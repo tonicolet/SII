@@ -21,7 +21,6 @@ import net.decosa.sii.ed.DesgloseIVAFR;
 import net.decosa.sii.ed.FacturaRecibida;
 import net.decosa.sii.facturas.AbstractAltaFacturasSII;
 import net.decosa.sii.facturas.RespuestaAlta;
-import net.decosa.sii.util.DateUtils;
 import net.decosa.sii.util.NumberUtils;
 import net.decosa.sii.ws.WSSIIRequest;
 
@@ -33,7 +32,7 @@ public class AltaFR extends AbstractAltaFacturasSII {
 	private String cif;
 	
 	@Value("${empresa.nombre}")
-	private String nombreEmpresaDeco;
+	private String nombreEmpresa;
 	
 	@Autowired
 	private WSSIIRequest wsSIIRequest;
@@ -115,10 +114,11 @@ public class AltaFR extends AbstractAltaFacturasSII {
 			FacturaRecibidaType facturaRecibidaType = new FacturaRecibidaType();
 			facturaRecibidaType.setTipoFactura(facturaRecibida.getTipoFacturaSII());
 			facturaRecibidaType.setClaveRegimenEspecialOTrascendencia(facturaRecibida.getClaveRegimenEspecialOTrascendencia());
-			facturaRecibidaType.setFechaOperacion(DateUtils.format(facturaRecibida.getFechaOperacion()));
+			facturaRecibidaType.setDescripcionOperacion(facturaRecibida.getDescripcionOperacionSII());
+			facturaRecibidaType.setFechaOperacion(facturaRecibida.getFechaOperacionSII());
 			
 			// Contraparte
-			facturaRecibidaType.setContraparte(facturaRecibida.getContraparte().toPersonaFisicaJuridicaType());
+			facturaRecibidaType.setContraparte(facturaRecibida.getContraparte().getPersonaFisicaJuridicaType());
 			
 			// Desglose factura
 			DesgloseFacturaRecibidasType desgloseFactura = new DesgloseFacturaRecibidasType();
@@ -158,8 +158,8 @@ public class AltaFR extends AbstractAltaFacturasSII {
 			facturaRecibidaType.setDesgloseFactura(desgloseFactura);
 			
 			facturaRecibidaType.setDescripcionOperacion(facturaRecibida.getDescripcionOperacion());
-			facturaRecibidaType.setFechaRegContable(DateUtils.format(facturaRecibida.getFechaRegContable()));
-			facturaRecibidaType.setFechaOperacion(DateUtils.format(facturaRecibida.getFechaRegContable()));
+			facturaRecibidaType.setFechaRegContable(facturaRecibida.getFechaRegContableSII());
+			facturaRecibidaType.setFechaOperacion(facturaRecibida.getFechaOperacionSII());
 			facturaRecibidaType.setCuotaDeducible("" + NumberUtils.round(quotaDeducible));
 			
 			facturaRecibidaSII.setFacturaRecibida(facturaRecibidaType);

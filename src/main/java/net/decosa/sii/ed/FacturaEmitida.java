@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.decosa.sii.util.NumberUtils;
 
 
 @Getter @Setter
@@ -23,6 +24,11 @@ public class FacturaEmitida extends Factura {
 		this.tipoNoExenta = tipoNoExenta;
 		this.desglosesIVA = desglosesIVA;
 		this.exenta = false;
+	}
+	
+	
+	public String getImporteTotalSII() {
+		return "" + NumberUtils.round(importeTotal);
 	}
 	
 }

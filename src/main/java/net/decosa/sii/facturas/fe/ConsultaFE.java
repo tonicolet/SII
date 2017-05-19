@@ -26,7 +26,7 @@ public class ConsultaFE {
 	private String cif;
 	
 	@Value("${empresa.nombre}")
-	private String nombreEmpresaDeco;
+	private String nombreEmpresa;
 	
 	@Autowired
 	private WSSIIRequest wsRequest;
@@ -40,7 +40,7 @@ public class ConsultaFE {
 		// CABECERA
 		PersonaFisicaJuridicaUnicaESType personaFisicaJuridicaUnicaESType = new PersonaFisicaJuridicaUnicaESType();
 		personaFisicaJuridicaUnicaESType.setNIF(cif);
-		personaFisicaJuridicaUnicaESType.setNombreRazon(nombreEmpresaDeco.toUpperCase());
+		personaFisicaJuridicaUnicaESType.setNombreRazon(nombreEmpresa.toUpperCase());
 		
 		CabeceraConsultaSii cabeceraConsultaSii = new CabeceraConsultaSii();
 		cabeceraConsultaSii.setIDVersionSii(siiVersion);

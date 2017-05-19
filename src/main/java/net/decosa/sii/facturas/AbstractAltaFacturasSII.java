@@ -79,11 +79,6 @@ public abstract class AbstractAltaFacturasSII {
 	public abstract RespuestaAlta send(boolean simularEnvio) throws Exception;
 	
 	
-	public void send() throws Exception {
-		send(false);
-	}
-	
-
 	protected String getXML(Object o) throws JAXBException {
 		return getXML(o, true);
 	}

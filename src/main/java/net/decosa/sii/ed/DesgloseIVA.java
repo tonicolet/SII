@@ -18,4 +18,5 @@ public class DesgloseIVA {
 	public void setBaseImponible(Double baseImponible) {
 		this.baseImponible = baseImponible;
 	}
+	
 }

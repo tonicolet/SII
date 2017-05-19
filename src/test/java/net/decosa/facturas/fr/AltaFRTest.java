@@ -3,9 +3,12 @@ package net.decosa.facturas.fr;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,7 +27,9 @@ import net.decosa.sii.util.DateUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SiiConfig.class)
 public class AltaFRTest {
-
+	
+	private final static Logger log = LoggerFactory.getLogger(AltaFRTest.class);
+	
 	@Autowired
 	private AltaFR altaFR;
 	
@@ -73,10 +78,18 @@ public class AltaFRTest {
 	public void altaFRTest() {
 		try {
 			altaFR.setFacturas(facturasRecibidas);
-			System.out.println(altaFR.getXML());
+			log.info(altaFR.getXML());
+			
+			// Enviar por WS
+//			boolean simularEnvio = false;
+//			RespuestaAlta respuestaAlta = altaFR.send(simularEnvio);
+//			log.info("{}", respuestaAlta);
+			
+			Assert.assertTrue(true);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.assertTrue(false);
 		}
 	}
 	

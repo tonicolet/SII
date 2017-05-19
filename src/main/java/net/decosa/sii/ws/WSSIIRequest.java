@@ -2,8 +2,8 @@ package net.decosa.sii.ws;
 
 import javax.xml.bind.JAXBElement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
@@ -22,7 +22,7 @@ import net.decosa.sii.aeat.SuministroLRFacturasRecibidas;
 
 public class WSSIIRequest extends WebServiceGatewaySupport {
 	
-	private static final Logger log = LoggerFactory.getLogger(WSSIIRequest.class);
+	private static final Log log = LogFactory.getLog(WSSIIRequest.class);
 	
 	private static final String ACCION_ALTA		= "ALTA";
 	private static final String ACCION_BAJA		= "BAJA";

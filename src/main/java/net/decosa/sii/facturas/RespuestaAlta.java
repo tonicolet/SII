@@ -6,10 +6,11 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.decosa.sii.util.StringUtils;
 
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class RespuestaAlta {
 	
 	private String estadoEnvio;

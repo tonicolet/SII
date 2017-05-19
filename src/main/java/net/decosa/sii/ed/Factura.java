@@ -2,7 +2,9 @@ package net.decosa.sii.ed;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.decosa.sii.SiiConfig;
 import net.decosa.sii.aeat.ClaveTipoFacturaType;
+import net.decosa.sii.util.StringUtils;
 
 
 @Getter @Setter
@@ -25,5 +27,10 @@ public class Factura {
 			return ClaveTipoFacturaType.F_1;
 		
 		return null;
+	}
+	
+	
+	public String getDescripcionOperacionSII() {
+		return StringUtils.limit(claveRegimenEspecialOTrascendencia, SiiConfig.MAX_LONG_DESCRIPCION_FACTURA);
 	}
 }

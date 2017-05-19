@@ -12,6 +12,7 @@ public class RespuestaAltaDetalle {
 	private Integer codigoError;
 	private String csv;
 	
+	
 	public Boolean erroneo() {
 		return (codigoError != null);
 	}

@@ -23,7 +23,6 @@ import net.decosa.sii.ed.DesgloseIVAFE;
 import net.decosa.sii.ed.FacturaEmitida;
 import net.decosa.sii.facturas.AbstractAltaFacturasSII;
 import net.decosa.sii.facturas.RespuestaAlta;
-import net.decosa.sii.util.NumberUtils;
 import net.decosa.sii.ws.WSSIIRequest;
 
 
@@ -110,11 +109,11 @@ public class AltaFE extends AbstractAltaFacturasSII {
 			FacturaExpedidaType facturaExpedidaType = new FacturaExpedidaType();
 			facturaExpedidaType.setTipoFactura(facturaEmitida.getTipoFacturaSII());
 			facturaExpedidaType.setClaveRegimenEspecialOTrascendencia(facturaEmitida.getClaveRegimenEspecialOTrascendencia());
-			facturaExpedidaType.setImporteTotal("" + NumberUtils.round(facturaEmitida.getImporteTotal()));
-			facturaExpedidaType.setDescripcionOperacion(facturaEmitida.getDescripcionOperacion());
+			facturaExpedidaType.setImporteTotal(facturaEmitida.getImporteTotalSII());
+			facturaExpedidaType.setDescripcionOperacion(facturaEmitida.getDescripcionOperacionSII());
 			
 			// Contraparte
-			facturaExpedidaType.setContraparte(facturaEmitida.getContraparte().toPersonaFisicaJuridicaType());
+			facturaExpedidaType.setContraparte(facturaEmitida.getContraparte().getPersonaFisicaJuridicaType());
 			
 			// Tipo desglose
 			TipoDesglose tipoDesglose = new TipoDesglose();
