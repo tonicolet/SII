@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class RespuestaAltaDetalle {
+public class RespuestaDetalle {
 	
 	private String numSerieFactura;
 	private String estadoRegistro;
 	private String descripcionError;
 	private Integer codigoError;
-	private String csv;
 	
 	
 	public Boolean erroneo() {

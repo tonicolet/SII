@@ -11,29 +11,27 @@ import net.decosa.sii.util.StringUtils;
 
 
 @Getter @Setter @ToString
-public class RespuestaAlta {
+public class Respuesta {
 	
 	private String estadoEnvio;
 	private Date fechaPresentacion;
 	private String csv;
-	private List<RespuestaAltaDetalle> respuestaDetalles;
+	private List<RespuestaDetalle> respuestaDetalles;
 	private Integer numeroFacturasCorrectas;
 	private Integer numeroFacturasIncorrectas;
 	
 	
-	public RespuestaAlta() {
-		this.respuestaDetalles = new ArrayList<RespuestaAltaDetalle>();
+	public Respuesta() {
+		this.respuestaDetalles = new ArrayList<RespuestaDetalle>();
 		this.numeroFacturasCorrectas = 0;
 		this.numeroFacturasIncorrectas = 0;
 	}
 	
 	
-	public void addRespuestaAltaDetalle(RespuestaAltaDetalle respuestaAltaDetalle) {
-		if (!StringUtils.isBlank(respuestaAltaDetalle.getDescripcionError()))
-			numeroFacturasIncorrectas++;
-		else
-			numeroFacturasCorrectas++;
+	public void addRespuestaDetalle(RespuestaDetalle respuestaDetalle) {
+		if (!StringUtils.isBlank(respuestaDetalle.getDescripcionError())) numeroFacturasIncorrectas++;
+		else numeroFacturasCorrectas++;
 		
-		respuestaDetalles.add(respuestaAltaDetalle);
+		respuestaDetalles.add(respuestaDetalle);
 	}
 }

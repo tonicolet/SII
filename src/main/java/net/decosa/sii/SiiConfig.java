@@ -22,11 +22,14 @@ import net.decosa.sii.ws.WSSIIRequest;
 @PropertySource(value = { "classpath:/sii.properties" })
 public class SiiConfig {
 
-	public static final String 		DEFAULT_DATE_FORMAT			= "dd-MM-yyyy";
+	public static final String DEFAULT_DATE_FORMAT			= "dd-MM-yyyy";
 	
-	public static final Integer 	MAX_LONG_NOMBRE_RAZON		= 120;
-	public static final Integer 	MAX_LONG_DESCRIPCION_FACTURA= 500;
-	public static final Integer		MAX_FACTURAS_POR_ENVIO		= 10000;
+	public static final Integer MAX_LONG_NOMBRE_RAZON		= 120;
+	public static final Integer MAX_LONG_DESCRIPCION_FACTURA= 500;
+	public static final Integer MAX_LONG_NUM_SERIE_FACTURA	= 60;
+	public static final Integer MAX_LONG_NIF				= 9;
+	
+	public static final Integer MAX_FACTURAS_POR_ENVIO		= 10000;
 	
 	@Value("${empresa.key_file}")
 	private Resource keyStore;

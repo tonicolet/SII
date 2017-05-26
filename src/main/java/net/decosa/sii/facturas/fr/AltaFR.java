@@ -3,8 +3,6 @@ package net.decosa.sii.facturas.fr;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import net.decosa.sii.aeat.DesgloseFacturaRecibidasType;
@@ -20,22 +18,12 @@ import net.decosa.sii.aeat.SuministroLRFacturasRecibidas;
 import net.decosa.sii.ed.DesgloseIVAFR;
 import net.decosa.sii.ed.FacturaRecibida;
 import net.decosa.sii.facturas.AbstractAltaFacturasSII;
-import net.decosa.sii.facturas.RespuestaAlta;
+import net.decosa.sii.facturas.Respuesta;
 import net.decosa.sii.util.NumberUtils;
-import net.decosa.sii.ws.WSSIIRequest;
 
 
 @Component
 public class AltaFR extends AbstractAltaFacturasSII {
-	
-	@Value("${empresa.cif}")
-	private String cif;
-	
-	@Value("${empresa.nombre}")
-	private String nombreEmpresa;
-	
-	@Autowired
-	private WSSIIRequest wsSIIRequest;
 	
 	private SuministroLRFacturasRecibidas suministroFR;
 
@@ -43,7 +31,7 @@ public class AltaFR extends AbstractAltaFacturasSII {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procesarDatos() throws Exception {
+	protected void procesar() throws Exception {
 		// Se prepara la información
 		suministroFR = new SuministroLRFacturasRecibidas();
 		
@@ -57,19 +45,20 @@ public class AltaFR extends AbstractAltaFacturasSII {
 
 	
 	@Override
-	public String getXML(boolean pretty) throws Exception {
+	public String getXML(boolean pretty) {
 		return getXML(suministroFR, pretty);
 	}
 	
 	
 	@Override
-	public String getXML() throws Exception {
+	public String getXML() {
 		return getXML(suministroFR);
 	}
 
 	
 	@Override
-	public RespuestaAlta send(boolean simularEnvio) throws Exception {
+	public Respuesta enviar(boolean simularEnvio) throws Exception {
+
 		// Envío
 		RespuestaLRFRecibidasType respuestaFR = wsSIIRequest.altaFR(suministroFR, simularEnvio);
 		
@@ -81,16 +70,18 @@ public class AltaFR extends AbstractAltaFacturasSII {
 	}
 
 	
-	private RespuestaAlta procesarRespuesta(RespuestaLRFRecibidasType respuestaFR, boolean simularEnvio) {
+	private Respuesta procesarRespuesta(RespuestaLRFRecibidasType respuestaFR, boolean simularEnvio) {
 		if (simularEnvio) return null;
 		
 		// Procesar cabecera
-		RespuestaAlta respuestaAlta = procesarRespuestaCabecera(respuestaFR.getEstadoEnvio(), respuestaFR.getDatosPresentacion(), respuestaFR.getCSV());
+		Respuesta respuestaAlta = procesarRespuestaCabecera(respuestaFR.getEstadoEnvio(),
+				respuestaFR.getDatosPresentacion(), respuestaFR.getCSV());
 		
 		// Procesar detalles
 		for(RespuestaRecibidaType respuestaLinea: respuestaFR.getRespuestaLinea())
-			procesarRespuestaDetalles(respuestaAlta, respuestaLinea.getIDFactura().getNumSerieFacturaEmisor(), respuestaLinea.getEstadoRegistro(), 
-					respuestaLinea.getCSV(), respuestaLinea.getDescripcionErrorRegistro(), respuestaLinea.getCodigoErrorRegistro());
+			procesarRespuestaDetalles(respuestaAlta, respuestaLinea.getIDFactura().getNumSerieFacturaEmisor(),
+					respuestaLinea.getEstadoRegistro(), respuestaLinea.getDescripcionErrorRegistro(),
+					respuestaLinea.getCodigoErrorRegistro());
 		
 		return respuestaAlta;
 	}
@@ -108,7 +99,7 @@ public class AltaFR extends AbstractAltaFacturasSII {
 			facturaRecibidaSII.setPeriodoImpositivo(facturaRecibida.getPeriodoImpositivo().toPeriodoImpositivoSII());
 			
 			// idFactura
-			facturaRecibidaSII.setIDFactura(facturaRecibida.getIdFactura().toIDFacturaRecibidaSII());
+			facturaRecibidaSII.setIDFactura(facturaRecibida.getIdFactura().getIDFacturaRecibidaType());
 			
 			// Factura recibida
 			FacturaRecibidaType facturaRecibidaType = new FacturaRecibidaType();

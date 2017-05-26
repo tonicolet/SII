@@ -1,24 +1,22 @@
 package net.decosa.sii.facturas;
 
-import net.decosa.sii.aeat.CabeceraSii;
-import net.decosa.sii.aeat.ClaveTipoComunicacionType;
+import net.decosa.sii.aeat.CabeceraSiiBaja;
 import net.decosa.sii.aeat.PersonaFisicaJuridicaESType;
 
 
-public abstract class AbstractAltaFacturasSII extends AbstractFacturasSII {
+public abstract class AbstractBajaFacturasSII extends AbstractFacturasSII {
 
 	
-	protected CabeceraSii getCabeceraAltaSII() {
+	protected CabeceraSiiBaja getCabeceraBajaSII() {
 		PersonaFisicaJuridicaESType personaFisicaJuridicaESType = new PersonaFisicaJuridicaESType();
 		personaFisicaJuridicaESType.setNIF(cif);
 		personaFisicaJuridicaESType.setNombreRazon(nombreEmpresa.toUpperCase());
 		
-		CabeceraSii cabeceraSii = new CabeceraSii();
+		CabeceraSiiBaja cabeceraSii = new CabeceraSiiBaja();
 		cabeceraSii.setIDVersionSii(siiVersion);
-		cabeceraSii.setTipoComunicacion(ClaveTipoComunicacionType.A_0);
 		cabeceraSii.setTitular(personaFisicaJuridicaESType);
 		
 		return cabeceraSii;
 	}
-	
+
 }

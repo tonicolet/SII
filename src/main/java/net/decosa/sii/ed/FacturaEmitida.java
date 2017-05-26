@@ -4,15 +4,19 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.decosa.sii.SiiConfig;
+import net.decosa.sii.aeat.ClaveTipoFacturaType;
 import net.decosa.sii.util.NumberUtils;
+import net.decosa.sii.util.StringUtils;
 
 
 @Getter @Setter
 public class FacturaEmitida extends Factura {
 	
-	public static final String TIPO_FACTURA_F1		= "F1";
-	public static final String TIPO_NO_EXENTA_S1	= "S1";
+	private String tipoFactura = TIPO_FACTURA_F1;
+	private String claveRegimenEspecialOTrascendencia;
 	
+	private String descripcionOperacion;
 	private Double importeTotal;
 	private Boolean exenta;
 	private String tipoNoExenta;
@@ -29,6 +33,19 @@ public class FacturaEmitida extends Factura {
 	
 	public String getImporteTotalSII() {
 		return "" + NumberUtils.round(importeTotal);
+	}
+	
+	
+	public ClaveTipoFacturaType getTipoFacturaSII() {
+		if (ClaveTipoFacturaType.F_1.value().compareTo(tipoFactura) == 0)
+			return ClaveTipoFacturaType.F_1;
+		
+		return null;
+	}
+	
+	
+	public String getDescripcionOperacionSII() {
+		return StringUtils.limit(claveRegimenEspecialOTrascendencia, SiiConfig.MAX_LONG_DESCRIPCION_FACTURA);
 	}
 	
 }

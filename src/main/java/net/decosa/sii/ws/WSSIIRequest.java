@@ -7,10 +7,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
+import net.decosa.sii.aeat.BajaLRFacturasEmitidas;
 import net.decosa.sii.aeat.BajaLRFacturasRecibidas;
 import net.decosa.sii.aeat.LRConsultaEmitidasType;
 import net.decosa.sii.aeat.ObjectFactory;
 import net.decosa.sii.aeat.RespuestaConsultaLRFacturasEmitidasType;
+import net.decosa.sii.aeat.RespuestaLRBajaFEmitidasType;
 import net.decosa.sii.aeat.RespuestaLRBajaFRecibidasType;
 import net.decosa.sii.aeat.RespuestaLRFEmitidasType;
 import net.decosa.sii.aeat.RespuestaLRFRecibidasType;
@@ -42,19 +44,6 @@ public class WSSIIRequest extends WebServiceGatewaySupport {
 	//
 	
 	@SuppressWarnings("unchecked")
-	public RespuestaConsultaLRFacturasEmitidasType consultaFE(LRConsultaEmitidasType lrConsultaEmitidasType, boolean simularEnvio) 
-			throws Exception {
-		
-		ObjectFactory of = new ObjectFactory();
-		
-		JAXBElement<RespuestaConsultaLRFacturasEmitidasType> response = (JAXBElement<RespuestaConsultaLRFacturasEmitidasType>)
-				sendAndReceiveFE(of.createConsultaLRFacturasEmitidas(lrConsultaEmitidasType), simularEnvio, ACCION_CONSULTA);
-		
-		return response.getValue();
-	}
-
-	
-	@SuppressWarnings("unchecked")
 	public RespuestaLRFEmitidasType altaFE(SuministroLRFacturasEmitidas suministroLRFacturasEmitidas, boolean simularEnvio)
 			throws Exception {
 		
@@ -65,6 +54,30 @@ public class WSSIIRequest extends WebServiceGatewaySupport {
 		return response.getValue();
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public RespuestaLRBajaFEmitidasType bajaFE(BajaLRFacturasEmitidas bajaFacturasEmitidas, boolean simularEnvio)
+			throws Exception {
+		
+		JAXBElement<RespuestaLRBajaFEmitidasType> response = (JAXBElement<RespuestaLRBajaFEmitidasType>)
+			sendAndReceiveFR(bajaFacturasEmitidas, simularEnvio, ACCION_BAJA);
+	
+		if (simularEnvio) return null;
+		return response.getValue();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public RespuestaConsultaLRFacturasEmitidasType consultaFE(LRConsultaEmitidasType lrConsultaEmitidasType, boolean simularEnvio) 
+			throws Exception {
+		
+		ObjectFactory of = new ObjectFactory();
+		
+		JAXBElement<RespuestaConsultaLRFacturasEmitidasType> response = (JAXBElement<RespuestaConsultaLRFacturasEmitidasType>)
+				sendAndReceiveFE(of.createConsultaLRFacturasEmitidas(lrConsultaEmitidasType), simularEnvio, ACCION_CONSULTA);
+		
+		return response.getValue();
+	}
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,18 +169,4 @@ public class WSSIIRequest extends WebServiceGatewaySupport {
 		return getWebServiceTemplate().marshalSendAndReceive(uri, sendObject);
 	}
 	
-	
-	
-//	private CabeceraSiiBaja getCabeceraBajaSII() {
-//		PersonaFisicaJuridicaESType personaFisicaJuridicaESType = new PersonaFisicaJuridicaESType();
-//		personaFisicaJuridicaESType.setNIF(cif);
-//		personaFisicaJuridicaESType.setNombreRazon(nombreEmpresaDeco.toUpperCase());
-//		
-//		CabeceraSiiBaja cabeceraSii = new CabeceraSiiBaja();
-//		cabeceraSii.setIDVersionSii(siiVersion);
-//		cabeceraSii.setTitular(personaFisicaJuridicaESType);
-//		
-//		return cabeceraSii;
-//	}
-
 }

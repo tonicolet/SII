@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,17 +19,19 @@ import net.decosa.sii.ed.FacturaRecibida;
 import net.decosa.sii.ed.IDFactura;
 import net.decosa.sii.ed.PeriodoImpositivo;
 import net.decosa.sii.facturas.fr.AltaFR;
+import net.decosa.sii.facturas.fr.BajaFR;
 import net.decosa.sii.util.DateUtils;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SiiConfig.class)
-public class AltaFRTest {
-	
-	private final static Logger log = LoggerFactory.getLogger(AltaFRTest.class);
+public class FacturasRecibidasTest {
 	
 	@Autowired
 	private AltaFR altaFR;
+	
+	@Autowired
+	private BajaFR bajaFR;
 	
 	private List<FacturaRecibida> facturasRecibidas;
 	
@@ -50,7 +50,6 @@ public class AltaFRTest {
 		f.setFechaOperacion(DateUtils.parse("01-03-2016"));
 		f.setFechaRegContable(DateUtils.parse("01-03-2017"));
 		f.setClaveRegimenEspecialOTrascendencia("01");
-		f.setImporteTotal(26.7);
 		f.setDescripcionOperacion("ARQ#");
 		
 		// Detalles IVA
@@ -78,12 +77,16 @@ public class AltaFRTest {
 	public void altaFRTest() {
 		try {
 			altaFR.setFacturas(facturasRecibidas);
-			log.info(altaFR.getXML());
+			
+			// Mostrar XML
+			System.out.println(altaFR.getXML());
 			
 			// Enviar por WS
-//			boolean simularEnvio = false;
-//			RespuestaAlta respuestaAlta = altaFR.send(simularEnvio);
-//			log.info("{}", respuestaAlta);
+			boolean simularEnvio = true;
+			altaFR.enviar(simularEnvio);
+			
+//			simularEnvio = false;
+//			RespuestaAlta respuesta = altaFR.send(simularEnvio);
 			
 			Assert.assertTrue(true);
 			
@@ -93,4 +96,27 @@ public class AltaFRTest {
 		}
 	}
 	
+	
+	@Test
+	public void bajaFRTest() {
+		try {
+			bajaFR.setFacturas(facturasRecibidas);
+			
+			// Mostrar XML
+			System.out.println(bajaFR.getXML());
+			
+			// Enviar por WS
+			boolean simularEnvio = true;
+			bajaFR.enviar(simularEnvio);
+			
+//			simularEnvio = false;
+//			RespuestaAlta respuesta = altaFR.send(simularEnvio);
+			
+			Assert.assertTrue(true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+	}
 }
